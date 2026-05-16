@@ -1,0 +1,12 @@
+name: e2e-hello
+on:
+  push:
+    branches: [main]
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        run: |
+          echo "Hello from forgejo-runner on $(hostname)"
+          echo "Forgejo version is $(curl -s https://forge.oddie.app/api/v1/version)"
