@@ -1,0 +1,15 @@
+name: docker-test
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and run alpine
+        run: |
+          echo "Hello from $(hostname) on $(uname -a)"
+          echo "Docker version:"
+          docker --version || true
+          echo "Pull + run alpine image:"
+          docker run --rm alpine:3.20 sh -c 'echo "this ran in a real container" && cat /etc/os-release'
