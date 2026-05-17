@@ -1,24 +1,7 @@
-name: pada-final-test
-on:
-  push:
-    branches: [main]
+name: dbg-smoke
+on: [push]
 jobs:
   smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - name: Identity
-        run: |
-          echo "Runner: $(hostname)"
-          echo "CPU cores: $(nproc), RAM: $(free -h | awk '/^Mem:/ {print $2}')"
-          cat /etc/os-release | head -3
-      - name: Docker available?
-        run: |
-          docker version --format 'Server: {{.Server.Version}}'
-          docker run --rm alpine:3.20 echo "✓ real container ran via auto-mounted host docker"
-  debian-test:
-    runs-on: debian-13
-    steps:
-      - name: Hello from Debian container
-        run: |
-          cat /etc/os-release | head -3
-          echo "PATH: $PATH"
+      - run: echo "hi from $(hostname)"; cat /etc/os-release | head -2
