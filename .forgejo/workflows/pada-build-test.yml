@@ -1,0 +1,24 @@
+name: pada-build-test
+on:
+  push:
+    branches: [main]
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Environment + Docker
+        run: |
+          echo "Runner: $(hostname)"
+          echo "CPU cores: $(nproc)"
+          echo "RAM: $(free -h | grep Mem)"
+          echo "---"
+          docker version --format 'Docker {{.Server.Version}}'
+      - name: Pull and run alpine
+        run: docker run --rm alpine:3.20 echo "real container ran on Pada"
+  rust-toolchain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm rust available (cargo from base image)
+        run: |
+          which cargo || (echo "cargo not in PATH, installing..." && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable)
+          ~/.cargo/bin/cargo --version 2>/dev/null || cargo --version
